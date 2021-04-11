@@ -1,0 +1,8 @@
+{% extends 'header.html' %}
+
+{% block content %}
+    <div class="container py5">
+        <h3>Seu código de segurança é: {{ security_code }}</h3>
+        <h3>Inicie uma conversa com o bot @MellonReminderBot no telegram e digite /set {{ security_code }}.</h3>
+    </div>
+{% endblock %}

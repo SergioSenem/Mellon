@@ -9,5 +9,6 @@ urlpatterns = [
     path('register', views.register, name='register'),
     path('login', views.login_request, name='login'),
     path('logout', views.logout_request, name='logout'),
-    path('security_code', views.security_code, name='security_code')
+    path('security_code', views.security_code, name='security_code'),
+    path('create_event', views.create_event, name='create_event')
 ]

@@ -3,10 +3,11 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
 from django.shortcuts import render, redirect
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from django.views.decorators.csrf import csrf_exempt
 
-from .forms import RegisterForm
+from .forms import RegisterForm, EventForm
+from .services.event import EventService
 from .services.security import SecurityService
 from .services.telegram import TelegramService
 
@@ -71,3 +72,16 @@ def security_code(request):
     code = security_service.get_or_create_security_code(request.user.id)
     context = {'security_code': code.code}
     return render(request=request, template_name="security_code.html", context=context)
+
+
+@login_required(login_url='login')
+def create_event(request):
+    if request.method == "POST":
+        form = EventForm(request.POST)
+        if form.is_valid():
+            event_service = EventService()
+            event_service.insert(request, form.cleaned_data)
+            return HttpResponseRedirect('/')
+    else:
+        form = EventForm()
+    return render(request=request, template_name='create_event.html', context={'form': form})

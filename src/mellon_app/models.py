@@ -25,5 +25,5 @@ class Event(models.Model):
 class Reminder(models.Model):
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
     message = models.CharField(max_length=200)
-    date = models.DateTimeField
+    date = models.DateTimeField()
     sent = models.BooleanField(default=False)
